@@ -15,6 +15,9 @@
 		869A7BA624A628C300C14FE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 869A7BA424A628C300C14FE2 /* LaunchScreen.storyboard */; };
 		869A7BB124A628C300C14FE2 /* IDRecognitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7BB024A628C300C14FE2 /* IDRecognitionTests.swift */; };
 		869A7BBC24A628C300C14FE2 /* IDRecognitionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7BBB24A628C300C14FE2 /* IDRecognitionUITests.swift */; };
+		869A7BCA24A6294700C14FE2 /* CoreGraphicsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7BC924A6294700C14FE2 /* CoreGraphicsExtension.swift */; };
+		869A7BCC24A629EC00C14FE2 /* CIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7BCB24A629EC00C14FE2 /* CIImageExtensions.swift */; };
+		869A7BCE24A629FE00C14FE2 /* CGImagePropertyOrientationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7BCD24A629FE00C14FE2 /* CGImagePropertyOrientationExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		869A7BB724A628C300C14FE2 /* IDRecognitionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IDRecognitionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		869A7BBB24A628C300C14FE2 /* IDRecognitionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDRecognitionUITests.swift; sourceTree = "<group>"; };
 		869A7BBD24A628C300C14FE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		869A7BC924A6294700C14FE2 /* CoreGraphicsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreGraphicsExtension.swift; sourceTree = "<group>"; };
+		869A7BCB24A629EC00C14FE2 /* CIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImageExtensions.swift; sourceTree = "<group>"; };
+		869A7BCD24A629FE00C14FE2 /* CGImagePropertyOrientationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImagePropertyOrientationExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,7 @@
 		869A7B9824A628C100C14FE2 /* IDRecognition */ = {
 			isa = PBXGroup;
 			children = (
+				869A7BCF24A62A2900C14FE2 /* Extensions */,
 				869A7B9924A628C100C14FE2 /* AppDelegate.swift */,
 				869A7B9B24A628C100C14FE2 /* SceneDelegate.swift */,
 				869A7B9D24A628C100C14FE2 /* ViewController.swift */,
@@ -126,6 +133,16 @@
 				869A7BBD24A628C300C14FE2 /* Info.plist */,
 			);
 			path = IDRecognitionUITests;
+			sourceTree = "<group>";
+		};
+		869A7BCF24A62A2900C14FE2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				869A7BC924A6294700C14FE2 /* CoreGraphicsExtension.swift */,
+				869A7BCB24A629EC00C14FE2 /* CIImageExtensions.swift */,
+				869A7BCD24A629FE00C14FE2 /* CGImagePropertyOrientationExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,6 +277,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				869A7B9E24A628C100C14FE2 /* ViewController.swift in Sources */,
+				869A7BCE24A629FE00C14FE2 /* CGImagePropertyOrientationExtensions.swift in Sources */,
+				869A7BCA24A6294700C14FE2 /* CoreGraphicsExtension.swift in Sources */,
+				869A7BCC24A629EC00C14FE2 /* CIImageExtensions.swift in Sources */,
 				869A7B9A24A628C100C14FE2 /* AppDelegate.swift in Sources */,
 				869A7B9C24A628C100C14FE2 /* SceneDelegate.swift in Sources */,
 			);
@@ -437,6 +457,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6UWE2EP59T;
 				INFOPLIST_FILE = IDRecognition/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -455,6 +476,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6UWE2EP59T;
 				INFOPLIST_FILE = IDRecognition/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
