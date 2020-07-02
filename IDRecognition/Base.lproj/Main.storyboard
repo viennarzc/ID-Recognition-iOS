@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="3Mz-zP-9wM">
             <objects>
-                <viewController id="x7P-32-u7D" sceneMemberID="viewController">
+                <viewController id="x7P-32-u7D" customClass="MainViewController" customModule="IDRecognition" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VRx-GG-OMv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,7 +25,7 @@
                                             <constraint firstAttribute="height" constant="60" id="yzB-i3-nfP"/>
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="AV Capture Flow">
+                                        <state key="normal" title="Live Capture Flow ( AV Capture )">
                                             <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
@@ -39,6 +39,9 @@
                                             <constraint firstAttribute="height" constant="60" id="jas-zl-4t3"/>
                                         </constraints>
                                         <state key="normal" title="ImagePicker Flow"/>
+                                        <connections>
+                                            <segue destination="Mod-pq-bzR" kind="show" id="QW8-Yy-t8v"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -62,9 +65,25 @@
             <point key="canvasLocation" x="223" y="102"/>
         </scene>
         <!--View Controller-->
+        <scene sceneID="YWv-9n-wRC">
+            <objects>
+                <viewController id="Mod-pq-bzR" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PK2-Wh-sTN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="hC6-Z0-VlM"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="mkh-Yu-auN"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="umc-2o-DcM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1157" y="384"/>
+        </scene>
+        <!--Live Capture View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="IDRecognition" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LiveCaptureViewController" customModule="IDRecognition" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -110,7 +129,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="101.78571428571428"/>
+            <point key="canvasLocation" x="1148" y="-279"/>
         </scene>
         <!--Scanned Image View Controller-->
         <scene sceneID="HLa-5O-Jcs">
@@ -140,7 +159,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kw3-N4-spe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1984.057971014493" y="101.78571428571428"/>
+            <point key="canvasLocation" x="2065" y="-279"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UOb-PH-1Qh">
