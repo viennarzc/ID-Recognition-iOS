@@ -13,7 +13,9 @@ class ScannedImageViewController: UIViewController {
   @IBOutlet weak var imageView: UIImageView!
 
   var image: UIImage?
-  
+  var cgImage: CGImage?
+  var cgImageOrientation: CGImagePropertyOrientation?
+
   // Image parameters for reuse throughout app
   var imageWidth: CGFloat = 0
   var imageHeight: CGFloat = 0
@@ -26,7 +28,7 @@ class ScannedImageViewController: UIViewController {
     // Customize & configure the request to detect only certain rectangles.
     rectDetectRequest.maximumObservations = 1 // Vision currently supports up to 16.
     rectDetectRequest.minimumConfidence = 0.6 // Be confident.
-    rectDetectRequest.minimumAspectRatio = 0.1 // height / width
+    rectDetectRequest.minimumAspectRatio = 0.3 // height / width
     return rectDetectRequest
   }()
 
@@ -38,12 +40,18 @@ class ScannedImageViewController: UIViewController {
   //MARK: Vision Completion Handlers
 
   func handleDetectedRectangles(request: VNRequest, error: Error?) {
+    if let nsError = error as NSError? {
+      self.presentAlert("Rectangle Detection Error", error: nsError)
+      return
+    }
 
+    // Since handlers are executing on a background thread, explicitly send draw calls to the main thread.
     DispatchQueue.main.async {
       guard let drawLayer = self.pathLayer,
         let results = request.results as? [VNRectangleObservation] else {
           return
       }
+      
       self.draw(rectangles: results, onImageWithBounds: drawLayer.bounds)
 
       drawLayer.setNeedsDisplay()
@@ -55,7 +63,7 @@ class ScannedImageViewController: UIViewController {
   fileprivate func draw(rectangles: [VNRectangleObservation], onImageWithBounds bounds: CGRect) {
     CATransaction.begin()
     for observation in rectangles {
-      
+
       let rectBox = boundingBox(forRegionOfInterest: observation.boundingBox, withinImageBounds: bounds)
 
       let rectLayer = shapeLayer(color: .blue, frame: rectBox)
@@ -78,16 +86,33 @@ class ScannedImageViewController: UIViewController {
       return
     }
 
+    show(image!)
+
     let cgOrientation = CGImagePropertyOrientation(image!.imageOrientation)
 
-    // Fire off request based on URL of chosen photo.
-    guard let cgImage = image!.cgImage else {
+    guard let cgImage = image?.cgImage else { return }
+    performVisionRequest(image: cgImage, orientation: cgOrientation)
+  }
+
+  func show(_ image: UIImage) {
+
+    // Remove previous paths & image
+    pathLayer?.removeFromSuperlayer()
+    pathLayer = nil
+    imageView.image = nil
+
+    // Account for image orientation by transforming view.
+    let correctedImage = scaleAndOrient(image: image)
+
+    // Place photo inside imageView.
+    imageView.image = correctedImage
+
+    // Transform image to fit screen.
+    guard let cgImage = correctedImage.cgImage else {
+      print("Trying to show an image not backed by CGImage!")
       return
     }
-    performVisionRequest(image: cgImage,
-      orientation: cgOrientation)
-    
-    
+
     let fullImageWidth = CGFloat(cgImage.width)
     let fullImageHeight = CGFloat(cgImage.height)
 
@@ -101,7 +126,7 @@ class ScannedImageViewController: UIViewController {
     // Cache image dimensions to reference when drawing CALayer paths.
     imageWidth = fullImageWidth / scaleDownRatio
     imageHeight = fullImageHeight / scaleDownRatio
-    
+
     // Prepare pathLayer to hold Vision results.
     let xLayer = (imageFrame.width - imageWidth) / 2
     let yLayer = imageView.frame.minY + (imageFrame.height - imageHeight) / 2
@@ -121,7 +146,7 @@ class ScannedImageViewController: UIViewController {
     let requests = [rectangleDetectionRequest]
     // Create a request handler.
     let imageRequestHandler = VNImageRequestHandler(cgImage: image,
-                                                    orientation: .down,
+      orientation: orientation,
       options: [:])
 
     // Send the requests to the request handler.
@@ -130,9 +155,23 @@ class ScannedImageViewController: UIViewController {
         try imageRequestHandler.perform(requests)
       } catch let error as NSError {
         print("Failed to perform image request: \(error)")
-//        self.presentAlert("Image Request Failed", error: error)
         return
       }
+    }
+  }
+
+  func presentAlert(_ title: String, error: NSError) {
+    // Always present alert on main thread.
+    DispatchQueue.main.async {
+      let alertController = UIAlertController(title: title,
+        message: error.localizedDescription,
+        preferredStyle: .alert)
+      let okAction = UIAlertAction(title: "OK",
+        style: .default) { _ in
+        // Do nothing -- simply dismiss alert.
+      }
+      alertController.addAction(okAction)
+      self.present(alertController, animated: true, completion: nil)
     }
   }
 
@@ -180,6 +219,88 @@ class ScannedImageViewController: UIViewController {
     layer.transform = CATransform3DMakeScale(1, -1, 1)
 
     return layer
+  }
+
+  // MARK: - Helper Methods
+
+  /// - Tag: PreprocessImage
+  func scaleAndOrient(image: UIImage) -> UIImage {
+
+    // Set a default value for limiting image size.
+    let maxResolution: CGFloat = 640
+
+    guard let cgImage = image.cgImage else {
+      print("UIImage has no CGImage backing it!")
+      return image
+    }
+
+    // Compute parameters for transform.
+    let width = CGFloat(cgImage.width)
+    let height = CGFloat(cgImage.height)
+    var transform = CGAffineTransform.identity
+
+    var bounds = CGRect(x: 0, y: 0, width: width, height: height)
+
+    if width > maxResolution ||
+      height > maxResolution {
+      let ratio = width / height
+      if width > height {
+        bounds.size.width = maxResolution
+        bounds.size.height = round(maxResolution / ratio)
+      } else {
+        bounds.size.width = round(maxResolution * ratio)
+        bounds.size.height = maxResolution
+      }
+    }
+
+    let scaleRatio = bounds.size.width / width
+    let orientation = image.imageOrientation
+    switch orientation {
+    case .up:
+      transform = .identity
+    case .down:
+      transform = CGAffineTransform(translationX: width, y: height).rotated(by: .pi)
+    case .left:
+      let boundsHeight = bounds.size.height
+      bounds.size.height = bounds.size.width
+      bounds.size.width = boundsHeight
+      transform = CGAffineTransform(translationX: 0, y: width).rotated(by: 3.0 * .pi / 2.0)
+    case .right:
+      let boundsHeight = bounds.size.height
+      bounds.size.height = bounds.size.width
+      bounds.size.width = boundsHeight
+      transform = CGAffineTransform(translationX: height, y: 0).rotated(by: .pi / 2.0)
+    case .upMirrored:
+      transform = CGAffineTransform(translationX: width, y: 0).scaledBy(x: -1, y: 1)
+    case .downMirrored:
+      transform = CGAffineTransform(translationX: 0, y: height).scaledBy(x: 1, y: -1)
+    case .leftMirrored:
+      let boundsHeight = bounds.size.height
+      bounds.size.height = bounds.size.width
+      bounds.size.width = boundsHeight
+      transform = CGAffineTransform(translationX: height, y: width).scaledBy(x: -1, y: 1).rotated(by: 3.0 * .pi / 2.0)
+    case .rightMirrored:
+      let boundsHeight = bounds.size.height
+      bounds.size.height = bounds.size.width
+      bounds.size.width = boundsHeight
+      transform = CGAffineTransform(scaleX: -1, y: 1).rotated(by: .pi / 2.0)
+    default:
+      transform = .identity
+    }
+
+    return UIGraphicsImageRenderer(size: bounds.size).image { rendererContext in
+      let context = rendererContext.cgContext
+
+      if orientation == .right || orientation == .left {
+        context.scaleBy(x: -scaleRatio, y: scaleRatio)
+        context.translateBy(x: -height, y: 0)
+      } else {
+        context.scaleBy(x: scaleRatio, y: -scaleRatio)
+        context.translateBy(x: 0, y: -height)
+      }
+      context.concatenate(transform)
+      context.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+    }
   }
 
 }
