@@ -18,6 +18,7 @@
 		869A7BCA24A6294700C14FE2 /* CoreGraphicsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7BC924A6294700C14FE2 /* CoreGraphicsExtension.swift */; };
 		869A7BCC24A629EC00C14FE2 /* CIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7BCB24A629EC00C14FE2 /* CIImageExtensions.swift */; };
 		869A7BCE24A629FE00C14FE2 /* CGImagePropertyOrientationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7BCD24A629FE00C14FE2 /* CGImagePropertyOrientationExtensions.swift */; };
+		869A7BD124A6378600C14FE2 /* ScannedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7BD024A6378600C14FE2 /* ScannedImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		869A7BC924A6294700C14FE2 /* CoreGraphicsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreGraphicsExtension.swift; sourceTree = "<group>"; };
 		869A7BCB24A629EC00C14FE2 /* CIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImageExtensions.swift; sourceTree = "<group>"; };
 		869A7BCD24A629FE00C14FE2 /* CGImagePropertyOrientationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGImagePropertyOrientationExtensions.swift; sourceTree = "<group>"; };
+		869A7BD024A6378600C14FE2 /* ScannedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				869A7B9924A628C100C14FE2 /* AppDelegate.swift */,
 				869A7B9B24A628C100C14FE2 /* SceneDelegate.swift */,
 				869A7B9D24A628C100C14FE2 /* ViewController.swift */,
+				869A7BD024A6378600C14FE2 /* ScannedImageViewController.swift */,
 				869A7B9F24A628C100C14FE2 /* Main.storyboard */,
 				869A7BA224A628C300C14FE2 /* Assets.xcassets */,
 				869A7BA424A628C300C14FE2 /* LaunchScreen.storyboard */,
@@ -280,6 +283,7 @@
 				869A7BCE24A629FE00C14FE2 /* CGImagePropertyOrientationExtensions.swift in Sources */,
 				869A7BCA24A6294700C14FE2 /* CoreGraphicsExtension.swift in Sources */,
 				869A7BCC24A629EC00C14FE2 /* CIImageExtensions.swift in Sources */,
+				869A7BD124A6378600C14FE2 /* ScannedImageViewController.swift in Sources */,
 				869A7B9A24A628C100C14FE2 /* AppDelegate.swift in Sources */,
 				869A7B9C24A628C100C14FE2 /* SceneDelegate.swift in Sources */,
 			);
