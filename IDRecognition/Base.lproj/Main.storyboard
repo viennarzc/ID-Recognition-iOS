@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Rik-oa-GDx">
-                                <rect key="frame" x="30" y="358" width="354" height="180"/>
+                                <rect key="frame" x="30" y="298" width="354" height="300"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfW-cl-tp5">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="60"/>
@@ -41,6 +41,17 @@
                                         <state key="normal" title="ImagePicker Flow"/>
                                         <connections>
                                             <segue destination="Mod-pq-bzR" kind="show" id="QW8-Yy-t8v"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Dp-tH-ONt">
+                                        <rect key="frame" x="0.0" y="240" width="354" height="60"/>
+                                        <color key="backgroundColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="2Hu-iO-914"/>
+                                        </constraints>
+                                        <state key="normal" title="VisionKit Flow"/>
+                                        <connections>
+                                            <segue destination="5yP-c0-oCb" kind="show" id="4zn-KB-ue8"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -104,6 +115,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="umc-2o-DcM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1148" y="376"/>
+        </scene>
+        <!--Vision Kit Document View Controller-->
+        <scene sceneID="5iS-hO-wgH">
+            <objects>
+                <viewController id="5yP-c0-oCb" customClass="VisionKitDocumentViewController" customModule="IDRecognition" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BBw-Am-8yn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="LqJ-o0-npk"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="FgU-fx-G1s"/>
+                    <connections>
+                        <segue destination="ZfM-o0-Efk" kind="show" identifier="goToRecognizedTextResults" id="5cA-uE-cnq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dSt-pc-9gE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1149" y="1066"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="E7a-rc-rzG">
+            <objects>
+                <viewController id="ZfM-o0-Efk" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0Px-KS-I9Q">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="jrJ-8D-zvW"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="RrV-m5-8ye"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TAO-5K-xnl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2129" y="1065"/>
         </scene>
         <!--Live Capture View Controller-->
         <scene sceneID="tne-QT-ifu">

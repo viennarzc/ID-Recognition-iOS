@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		86653EFA24AD97F1006BFAFD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86653EF924AD97F1006BFAFD /* MainViewController.swift */; };
 		86653EFC24AD9937006BFAFD /* CameraPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86653EFB24AD9937006BFAFD /* CameraPhotoViewController.swift */; };
+		868DA95424B2D2B500A05022 /* VisionKitDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868DA95324B2D2B500A05022 /* VisionKitDocumentViewController.swift */; };
 		869A7B9A24A628C100C14FE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7B9924A628C100C14FE2 /* AppDelegate.swift */; };
 		869A7B9C24A628C100C14FE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7B9B24A628C100C14FE2 /* SceneDelegate.swift */; };
 		869A7B9E24A628C100C14FE2 /* LiveCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7B9D24A628C100C14FE2 /* LiveCaptureViewController.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		86653EF924AD97F1006BFAFD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		86653EFB24AD9937006BFAFD /* CameraPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPhotoViewController.swift; sourceTree = "<group>"; };
+		868DA95324B2D2B500A05022 /* VisionKitDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionKitDocumentViewController.swift; sourceTree = "<group>"; };
 		869A7B9624A628C100C14FE2 /* IDRecognition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IDRecognition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		869A7B9924A628C100C14FE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		869A7B9B24A628C100C14FE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				869A7B9D24A628C100C14FE2 /* LiveCaptureViewController.swift */,
 				86653EF924AD97F1006BFAFD /* MainViewController.swift */,
 				86653EFB24AD9937006BFAFD /* CameraPhotoViewController.swift */,
+				868DA95324B2D2B500A05022 /* VisionKitDocumentViewController.swift */,
 				869A7BD024A6378600C14FE2 /* ScannedImageViewController.swift */,
 				869A7B9F24A628C100C14FE2 /* Main.storyboard */,
 				869A7BA224A628C300C14FE2 /* Assets.xcassets */,
@@ -291,6 +294,7 @@
 				869A7BCC24A629EC00C14FE2 /* CIImageExtensions.swift in Sources */,
 				869A7BD124A6378600C14FE2 /* ScannedImageViewController.swift in Sources */,
 				869A7B9A24A628C100C14FE2 /* AppDelegate.swift in Sources */,
+				868DA95424B2D2B500A05022 /* VisionKitDocumentViewController.swift in Sources */,
 				869A7B9C24A628C100C14FE2 /* SceneDelegate.swift in Sources */,
 				86653EFA24AD97F1006BFAFD /* MainViewController.swift in Sources */,
 				86653EFC24AD9937006BFAFD /* CameraPhotoViewController.swift in Sources */,
