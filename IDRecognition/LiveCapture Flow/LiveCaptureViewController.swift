@@ -167,31 +167,6 @@ class LiveCaptureViewController: UIViewController, AVCapturePhotoCaptureDelegate
     
     return false
   }
-
-  func handleLastObservation(buffer sampleBuffer: CMSampleBuffer) {
-    guard
-    // get the CVPixelBuffer out of the CMSampleBuffer
-    let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer),
-      // make sure that there is a previous observation we can feed into the request
-    let lastObservation = self.lastObservation
-      else { return }
-
-    // create the request
-    let request = VNTrackObjectRequest(detectedObjectObservation: lastObservation, completionHandler: self.handleVisionRequestUpdate)
-
-    // set the accuracy to high
-    // this is slower, but it works a lot better
-    request.trackingLevel = .accurate
-
-    // perform the request
-    do {
-      try self.sequenceHandler.perform([request], on: pixelBuffer)
-    } catch {
-      print("Throws: \(error)")
-    }
-
-  }
-  
   
   func updateLabel(title: String) {
     DispatchQueue.main.async {
@@ -209,32 +184,6 @@ class LiveCaptureViewController: UIViewController, AVCapturePhotoCaptureDelegate
 
     if transpositionHistoryPoints.count > maximumHistoryLength {
       transpositionHistoryPoints.removeFirst()
-    }
-  }
-
-  private func handleVisionRequestUpdate(_ request: VNRequest, error: Error?) {
-    // Dispatch to the main queue because we are touching non-atomic, non-thread safe properties of the view controller
-    DispatchQueue.main.async {
-      // make sure we have an actual result
-      guard let newObservation = request.results?.first as? VNDetectedObjectObservation else { return }
-
-      // prepare for next loop
-      self.lastObservation = newObservation
-
-      // check the confidence level before updating the UI
-      guard newObservation.confidence >= 0.3 else {
-        // hide the rectangle when we lose accuracy so the user knows something is wrong
-        self.overlayView.frame = .zero
-        return
-      }
-
-      // calculate view rect
-      var transformedRect = newObservation.boundingBox
-      transformedRect.origin.y = 1 - transformedRect.origin.y
-      let convertedRect = self.previewLayer.layerRectConverted(fromMetadataOutputRect: transformedRect)
-      // move the highlight view
-      self.overlayView.frame = convertedRect
-
     }
   }
 
