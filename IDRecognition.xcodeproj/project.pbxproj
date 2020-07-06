@@ -90,6 +90,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		868DA95524B2D50B00A05022 /* LiveCapture Flow */ = {
+			isa = PBXGroup;
+			children = (
+				869A7B9D24A628C100C14FE2 /* LiveCaptureViewController.swift */,
+			);
+			path = "LiveCapture Flow";
+			sourceTree = "<group>";
+		};
+		868DA95624B2D51900A05022 /* StillImage Flow */ = {
+			isa = PBXGroup;
+			children = (
+				86653EFB24AD9937006BFAFD /* CameraPhotoViewController.swift */,
+			);
+			path = "StillImage Flow";
+			sourceTree = "<group>";
+		};
+		868DA95724B2D52300A05022 /* VisionKit Flow */ = {
+			isa = PBXGroup;
+			children = (
+				868DA95324B2D2B500A05022 /* VisionKitDocumentViewController.swift */,
+			);
+			path = "VisionKit Flow";
+			sourceTree = "<group>";
+		};
 		869A7B8D24A628C100C14FE2 = {
 			isa = PBXGroup;
 			children = (
@@ -116,10 +140,10 @@
 				869A7BCF24A62A2900C14FE2 /* Extensions */,
 				869A7B9924A628C100C14FE2 /* AppDelegate.swift */,
 				869A7B9B24A628C100C14FE2 /* SceneDelegate.swift */,
-				869A7B9D24A628C100C14FE2 /* LiveCaptureViewController.swift */,
 				86653EF924AD97F1006BFAFD /* MainViewController.swift */,
-				86653EFB24AD9937006BFAFD /* CameraPhotoViewController.swift */,
-				868DA95324B2D2B500A05022 /* VisionKitDocumentViewController.swift */,
+				868DA95524B2D50B00A05022 /* LiveCapture Flow */,
+				868DA95624B2D51900A05022 /* StillImage Flow */,
+				868DA95724B2D52300A05022 /* VisionKit Flow */,
 				869A7BD024A6378600C14FE2 /* ScannedImageViewController.swift */,
 				869A7B9F24A628C100C14FE2 /* Main.storyboard */,
 				869A7BA224A628C300C14FE2 /* Assets.xcassets */,
