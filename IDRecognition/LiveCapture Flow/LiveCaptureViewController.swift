@@ -12,6 +12,8 @@ import AVFoundation
 
 class LiveCaptureViewController: UIViewController, AVCapturePhotoCaptureDelegate {
 
+
+  @IBOutlet weak var stabilityLabel: UILabel!
   @IBOutlet weak var observationLabel: UILabel!
   private var requests = [VNRequest]()
   private var rectangleLastObservation: VNRectangleObservation?
@@ -33,6 +35,18 @@ class LiveCaptureViewController: UIViewController, AVCapturePhotoCaptureDelegate
 
   var capturePhotoOutput: AVCapturePhotoOutput?
   var videoOutput: AVCaptureVideoDataOutput?
+
+  //for stability
+  private let sequenceRequestHandler = VNSequenceRequestHandler()
+  
+  // Registration history
+  private let maximumHistoryLength = 5
+  private var transpositionHistoryPoints: [CGPoint] = []
+  private var previousPixelBuffer: CVPixelBuffer?
+
+  // The current pixel buffer undergoing analysis. Run requests in a serial fashion, one after another.
+  private var currentlyAnalyzedPixelBuffer: CVPixelBuffer?
+
 
   var capturedImage: UIImage?
 
@@ -90,14 +104,14 @@ class LiveCaptureViewController: UIViewController, AVCapturePhotoCaptureDelegate
       let output = AVCaptureVideoDataOutput()
       output.setSampleBufferDelegate(self, queue: queue)
       previewLayer.videoGravity = .resizeAspectFill
-      
+
       if let connection = output.connection(with: .video), connection.isVideoOrientationSupported {
         connection.videoOrientation = .portrait
       }
-  
+
       session.addInput(input)
       session.addOutput(output)
-      
+
 
       if let stillImageOutput = capturePhotoOutput {
         session.addOutput(stillImageOutput)
@@ -130,6 +144,30 @@ class LiveCaptureViewController: UIViewController, AVCapturePhotoCaptureDelegate
 
   }
 
+  //MARK: - CheckSceneStability
+
+  fileprivate func sceneStabilityAchieved() -> Bool {
+    // Determine if we have enough evidence of stability.
+    
+    if transpositionHistoryPoints.count == maximumHistoryLength {
+      // Calculate the moving average.
+      var movingAverage: CGPoint = CGPoint.zero
+      for currentPoint in transpositionHistoryPoints {
+        movingAverage.x += currentPoint.x
+        movingAverage.y += currentPoint.y
+      }
+      let distance = abs(movingAverage.x) + abs(movingAverage.y)
+      
+      if distance < 20 {
+      
+        return true
+      }
+    }
+    
+    
+    return false
+  }
+
   func handleLastObservation(buffer sampleBuffer: CMSampleBuffer) {
     guard
     // get the CVPixelBuffer out of the CMSampleBuffer
@@ -152,6 +190,26 @@ class LiveCaptureViewController: UIViewController, AVCapturePhotoCaptureDelegate
       print("Throws: \(error)")
     }
 
+  }
+  
+  
+  func updateLabel(title: String) {
+    DispatchQueue.main.async {
+      self.stabilityLabel.text = title
+    }
+
+  }
+
+  fileprivate func resetTranspositionHistory() {
+    transpositionHistoryPoints.removeAll()
+  }
+
+  fileprivate func recordTransposition(_ point: CGPoint) {
+    transpositionHistoryPoints.append(point)
+
+    if transpositionHistoryPoints.count > maximumHistoryLength {
+      transpositionHistoryPoints.removeFirst()
+    }
   }
 
   private func handleVisionRequestUpdate(_ request: VNRequest, error: Error?) {
@@ -374,8 +432,8 @@ class LiveCaptureViewController: UIViewController, AVCapturePhotoCaptureDelegate
   @IBAction func didTapTakePhoto(_ sender: Any) {
     let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
 
-    guard let photoOutputConnection = capturePhotoOutput?.connection(with: AVMediaType.video) else {fatalError("Unable to establish input>output connection")}// setup a connection that manages input > output
-    
+    guard let photoOutputConnection = capturePhotoOutput?.connection(with: AVMediaType.video) else { fatalError("Unable to establish input>output connection") }// setup a connection that manages input > output
+
     photoOutputConnection.videoOrientation = .portrait // update photo's output connection to match device's orientation
 
     let photoSettings = AVCapturePhotoSettings()
@@ -396,9 +454,52 @@ extension LiveCaptureViewController: AVCaptureVideoDataOutputSampleBufferDelegat
     output: AVCaptureOutput,
     didOutput sampleBuffer: CMSampleBuffer,
     from connection: AVCaptureConnection) {
-    
+
     handle(buffer: sampleBuffer)
+
+
+    guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+      return
+    }
+
+    guard previousPixelBuffer != nil else {
+      previousPixelBuffer = pixelBuffer
+      self.resetTranspositionHistory()
+      return
+    }
+
+
+    let registrationRequest = VNTranslationalImageRegistrationRequest(targetedCVPixelBuffer: pixelBuffer)
+    do {
+      try sequenceRequestHandler.perform([registrationRequest], on: previousPixelBuffer!)
+    } catch let error as NSError {
+      print("Failed to process request: \(error.localizedDescription).")
+      return
+    }
+
+    previousPixelBuffer = pixelBuffer
+
+    if let results = registrationRequest.results {
+      if let alignmentObservation = results.first as? VNImageTranslationAlignmentObservation {
+        let alignmentTransform = alignmentObservation.alignmentTransform
+        self.recordTransposition(CGPoint(x: alignmentTransform.tx, y: alignmentTransform.ty))
+      }
+    }
+    if self.sceneStabilityAchieved() {
+      updateLabel(title: "Stable")
+      
+      if currentlyAnalyzedPixelBuffer == nil {
+        // Retain the image buffer for Vision processing.
+        currentlyAnalyzedPixelBuffer = pixelBuffer
+//        analyzeCurrentImage()
+      }
+      
+    } else {
+      updateLabel(title: "Unstable")
+    }
   }
+
+
 
   func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
     guard let imageData = photo.fileDataRepresentation()

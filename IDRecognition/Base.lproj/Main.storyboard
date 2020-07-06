@@ -179,13 +179,56 @@
                                     <action selector="didTapTakePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hj6-hr-rEH"/>
                                 </connections>
                             </button>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4fX-l8-6dm">
+                                <rect key="frame" x="299" y="384" width="100" height="128"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="0Rd-od-bn5">
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="128"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Unknown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j5k-FU-u0j">
+                                            <rect key="frame" x="14" y="53" width="72" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="CH0-6K-VGY"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dk2-Le-rOE">
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="Rpb-FH-vSL">
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <vibrancyEffect>
+                                                <blurEffect style="regular"/>
+                                            </vibrancyEffect>
+                                        </visualEffectView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="j5k-FU-u0j" firstAttribute="centerX" secondItem="0Rd-od-bn5" secondAttribute="centerX" id="7Db-uY-zhc"/>
+                                        <constraint firstItem="j5k-FU-u0j" firstAttribute="centerY" secondItem="0Rd-od-bn5" secondAttribute="centerY" id="w1X-H7-Aap"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="vqs-Dr-mYK"/>
+                                    <constraint firstAttribute="width" constant="100" id="y1Z-vl-nBF"/>
+                                </constraints>
+                                <blurEffect style="regular"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4fX-l8-6dm" secondAttribute="trailing" constant="15" id="5Wl-yH-L2y"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cJd-vg-2VI" secondAttribute="bottom" id="5Wz-cz-vJz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Kxc-ol-IcU" secondAttribute="bottom" constant="30" id="8RG-a8-AwE"/>
                             <constraint firstItem="Kxc-ol-IcU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="IRf-E5-pBU"/>
                             <constraint firstItem="cJd-vg-2VI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Zq1-HW-nJb"/>
+                            <constraint firstItem="4fX-l8-6dm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="exv-4n-Eqn"/>
                             <constraint firstItem="cJd-vg-2VI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="iDf-55-ZOj"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cJd-vg-2VI" secondAttribute="trailing" id="unC-L8-9PT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Kxc-ol-IcU" secondAttribute="trailing" constant="30" id="zND-di-5tb"/>
@@ -195,6 +238,7 @@
                     <navigationItem key="navigationItem" id="F4D-ay-P9H"/>
                     <connections>
                         <outlet property="captureView" destination="cJd-vg-2VI" id="5yT-Pt-4I6"/>
+                        <outlet property="stabilityLabel" destination="j5k-FU-u0j" id="KNz-Lt-X6o"/>
                         <segue destination="a89-Dy-aTL" kind="show" identifier="goToScannedImage" id="bhQ-02-zPA"/>
                     </connections>
                 </viewController>
@@ -252,6 +296,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lvL-CP-bxQ"/>
+        <segue reference="bhQ-02-zPA"/>
     </inferredMetricsTieBreakers>
 </document>
