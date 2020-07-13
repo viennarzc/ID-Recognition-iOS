@@ -39,6 +39,7 @@
 		86B4877624BBFAB800F41B96 /* regions.json in Resources */ = {isa = PBXBuildFile; fileRef = 86B4877424BBFAB800F41B96 /* regions.json */; };
 		86B4877824BBFACA00F41B96 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B4877724BBFACA00F41B96 /* Region.swift */; };
 		86B4877A24BBFBE300F41B96 /* Province.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B4877924BBFBE300F41B96 /* Province.swift */; };
+		86B4877C24BC391B00F41B96 /* PHDivisionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B4877B24BC391B00F41B96 /* PHDivisionsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		86B4877424BBFAB800F41B96 /* regions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = regions.json; sourceTree = "<group>"; };
 		86B4877724BBFACA00F41B96 /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		86B4877924BBFBE300F41B96 /* Province.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Province.swift; sourceTree = "<group>"; };
+		86B4877B24BC391B00F41B96 /* PHDivisionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHDivisionsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +247,7 @@
 				869A7BA224A628C300C14FE2 /* Assets.xcassets */,
 				869A7BA424A628C300C14FE2 /* LaunchScreen.storyboard */,
 				869A7BA724A628C300C14FE2 /* Info.plist */,
+				86B4877B24BC391B00F41B96 /* PHDivisionsModel.swift */,
 			);
 			path = IDRecognition;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				86720E4724B598290094592C /* StringExtensions.swift in Sources */,
 				86653EFA24AD97F1006BFAFD /* MainViewController.swift in Sources */,
 				86653EFC24AD9937006BFAFD /* CameraPhotoViewController.swift in Sources */,
+				86B4877C24BC391B00F41B96 /* PHDivisionsModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

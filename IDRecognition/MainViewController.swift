@@ -14,21 +14,12 @@ class MainViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    PHDivisionsModel.shared.loadProvinces()
+    PHDivisionsModel.shared.loadCities()
 
-
-    if let path = Bundle.main.path(forResource: "cities", ofType: "json") {
-      do {
-        let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-
-        let decoder = JSONDecoder()
-
-        if let model = try? decoder.decode(Array<City>.self, from: data) {
-          print(model)
-        }
-
-      } catch {
-        // handle error
-      }
-    }
   }
+
+
+
+
 }
