@@ -92,6 +92,39 @@ class IDRecognitionTests: XCTestCase {
     }
     
   }
+  
+  func testFindProvince() {
+    let arrayOfStrings: [String] = [
+      "REPUBLIC OF THE PHILIPPINES",
+      "Unified Multi-Purpose ID",
+      "CRN 0111-9149122-6",
+      "SURNAME",
+      "CURTIZ",
+      "GIVEN NAME",
+      "VIENNARZ",
+      "MIDDLE NAME",
+      "VALDEVIESO",
+      "SEX M DATEOF BIRTH1 990/03/20",
+      "ADDRESS",
+      "201 16 BLK 44",
+      "PH",
+      "ESTANOL",
+      "SUBD SUDAPIN KIDAPAWAN",
+      "CITY NORTH COTABATO PHL",
+      "9400",
+    ]
+    
+    PHDivisionsModel.shared.findProvince(from: arrayOfStrings.joined(separator: " ").capitalized) { (p) in
+      
+      if let p = p {
+        XCTAssert(p.name.contains("Cotabato"), "did not find province of Cotabato")
+        return
+      }
+      
+      XCTFail("Empty")
+      
+    }
+  }
 
   func testFindCityInArray() {
     let arrayOfTexts = ["REPUBLIC OF THE PHILIPPINES",

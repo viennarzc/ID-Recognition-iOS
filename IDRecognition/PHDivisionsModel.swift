@@ -80,6 +80,14 @@ final class PHDivisionsModel {
     completion(city)
     
   }
+  
+  func findProvince(from: String, completion: @escaping (Province?) -> Void) {
+    guard let province = provinces.first(where: { from.contains($0.name) }) else {
+      return completion(nil)}
+    
+    completion(province)
+    
+  }
 
 
 }
