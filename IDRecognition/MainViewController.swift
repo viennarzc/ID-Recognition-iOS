@@ -10,9 +10,25 @@ import UIKit
 
 class MainViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+  override func viewDidLoad() {
+    super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.
+
+
+    if let path = Bundle.main.path(forResource: "cities", ofType: "json") {
+      do {
+        let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+
+        let decoder = JSONDecoder()
+
+        if let model = try? decoder.decode(Array<City>.self, from: data) {
+          print(model)
+        }
+
+      } catch {
+        // handle error
+      }
     }
+  }
 }

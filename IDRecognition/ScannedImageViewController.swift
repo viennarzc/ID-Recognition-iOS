@@ -12,6 +12,7 @@ import Vision
 class ScannedImageViewController: UIViewController {
   @IBOutlet weak var imageView: UIImageView!
 
+  @IBOutlet weak var showTextBarButtonItem: UIBarButtonItem!
   var image: UIImage?
   var cgImage: CGImage?
   var cgImageOrientation: CGImagePropertyOrientation?
@@ -32,12 +33,80 @@ class ScannedImageViewController: UIViewController {
     return rectDetectRequest
   }()
 
+  lazy var textDetectionRequest: VNRecognizeTextRequest = {
+    let request = VNRecognizeTextRequest(completionHandler: self.handleDetectedTexts)
+    request.recognitionLevel = .accurate
+
+    //TODO: Custom words add on constants
+    request.customWords = [
+      "Bureau of Internal Revenue",
+      "Land Transportation Office",
+      "Baguio",
+      "Republic of the Philippines",
+      "Unified Multi-purpose ID",
+      "MIDDLE NAME",
+      "FIRST NAME",
+      "SURNAME",
+      "Apelyido/Surname",
+      "Pangalan/Given name",
+      "Lugar ng kapanganakan/Date of birth",
+      "Petsa ng pagkakaloob/Date of issue",
+      "Petsa ng pagkawalang bisa/Valid until",
+      "Pangalan/Given names",
+      "Panggitnang apelyido/Middle name",
+      "Kasarian/Sex",
+      "Nasyonalidad/Nationality",
+      "Maykapangyarihang nagkaloob/Issueing authority",
+      "Pasaporte blg/Passport no",
+      "Kodigo ng bansa/Country code"
+    ]
+
+    request.recognitionLanguages = ["en-PH", "en-US", "en-AU", "en-GB"]
+    return request
+  }()
+
+
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    showTextBarButtonItem.isEnabled = false
 
   }
 
   //MARK: Vision Completion Handlers
+
+  func handleDetectedTexts(request: VNRequest?, error: Error?) {
+    if let error = error {
+      debugPrint(error)
+      return
+    }
+
+    guard let results = request?.results, results.count > 0 else {
+      return
+    }
+
+    var sessionCapturedTexts: [String] = []
+
+    for result in results {
+
+      if let observation = result as? VNRecognizedTextObservation {
+        for text in observation.topCandidates(1) {
+
+          print("text", text.string)
+          sessionCapturedTexts.append(text.string)
+
+        }
+      }
+    }
+
+    DispatchQueue.main.async {
+      if !sessionCapturedTexts.isEmpty {
+        self.showTextBarButtonItem.isEnabled = true
+      }
+//      print(self.capturedTexts)
+
+    }
+  }
 
   func handleDetectedRectangles(request: VNRequest, error: Error?) {
     if let nsError = error as NSError? {
@@ -51,9 +120,13 @@ class ScannedImageViewController: UIViewController {
         let results = request.results as? [VNRectangleObservation] else {
           return
       }
-      
-      self.draw(rectangles: results, onImageWithBounds: drawLayer.bounds)
 
+      self.draw(rectangles: results, onImageWithBounds: drawLayer.bounds)
+      
+      if let observation = results.first {
+        self.imageView.image = self.doPerspectiveCorrection(observation, from: self.imageView.image!)
+      }
+      
       drawLayer.setNeedsDisplay()
     }
 
@@ -143,7 +216,7 @@ class ScannedImageViewController: UIViewController {
   fileprivate func performVisionRequest(image: CGImage, orientation: CGImagePropertyOrientation) {
 
     // Fetch desired requests based on switch status.
-    let requests = [rectangleDetectionRequest]
+    let requests = [rectangleDetectionRequest, textDetectionRequest]
     // Create a request handler.
     let imageRequestHandler = VNImageRequestHandler(cgImage: image,
       orientation: orientation,
@@ -159,6 +232,29 @@ class ScannedImageViewController: UIViewController {
       }
     }
   }
+  
+  func doPerspectiveCorrection(_ observation: VNRectangleObservation, from image: UIImage) -> UIImage {
+
+    var ciImage = CIImage(image: image)!
+
+    let topLeft = observation.topLeft.scaled(to: ciImage.extent.size)
+    let topRight = observation.topRight.scaled(to: ciImage.extent.size)
+    let bottomLeft = observation.bottomLeft.scaled(to: ciImage.extent.size)
+    let bottomRight = observation.bottomRight.scaled(to: ciImage.extent.size)
+
+    ciImage = ciImage.applyingFilter("CIPerspectiveCorrection", parameters: [
+      "inputTopLeft": CIVector(cgPoint: topLeft),
+      "inputTopRight": CIVector(cgPoint: topRight),
+      "inputBottomLeft": CIVector(cgPoint: bottomLeft),
+      "inputBottomRight": CIVector(cgPoint: bottomRight),
+      ])
+
+    let context = CIContext()
+    let cgImage = context.createCGImage(ciImage, from: ciImage.extent)
+    let output = UIImage(cgImage: cgImage!)
+    return output
+  }
+  
 
   func presentAlert(_ title: String, error: NSError) {
     // Always present alert on main thread.
