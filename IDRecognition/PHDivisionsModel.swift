@@ -74,7 +74,7 @@ final class PHDivisionsModel {
   }
   
   func findCity(from: String, completion: @escaping (City?) -> Void) {
-    guard let city = cities.first(where: { from.contains($0.name) }) else {
+    guard let city = cities.first(where: { from.capitalized.contains($0.name.capitalized) }) else {
       return completion(nil)}
     
     completion(city)
@@ -82,7 +82,7 @@ final class PHDivisionsModel {
   }
   
   func findProvince(from: String, completion: @escaping (Province?) -> Void) {
-    guard let province = provinces.first(where: { from.contains($0.name) }) else {
+    guard let province = provinces.first(where: { from.capitalized.contains($0.name.capitalized) }) else {
       return completion(nil)}
     
     completion(province)

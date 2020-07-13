@@ -11,8 +11,10 @@ import Vision
 
 class ScannedImageViewController: UIViewController {
   @IBOutlet weak var imageView: UIImageView!
-
   @IBOutlet weak var showTextBarButtonItem: UIBarButtonItem!
+  
+  var viewModel: ScannedImageViewModel?
+  
   var image: UIImage?
   var cgImage: CGImage?
   var cgImageOrientation: CGImagePropertyOrientation?
@@ -47,6 +49,7 @@ class ScannedImageViewController: UIViewController {
       "MIDDLE NAME",
       "FIRST NAME",
       "SURNAME",
+      "Kidapawan",
       "Apelyido/Surname",
       "Pangalan/Given name",
       "Lugar ng kapanganakan/Date of birth",
@@ -69,6 +72,7 @@ class ScannedImageViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    viewModel = ScannedImageViewModel()
     showTextBarButtonItem.isEnabled = false
 
   }
@@ -94,7 +98,7 @@ class ScannedImageViewController: UIViewController {
 
           print("text", text.string)
           sessionCapturedTexts.append(text.string)
-
+          
         }
       }
     }
@@ -104,7 +108,7 @@ class ScannedImageViewController: UIViewController {
         self.showTextBarButtonItem.isEnabled = true
       }
 //      print(self.capturedTexts)
-
+      self.viewModel?.capturedTexts = sessionCapturedTexts
     }
   }
 
@@ -166,6 +170,15 @@ class ScannedImageViewController: UIViewController {
     guard let cgImage = image?.cgImage else { return }
     performVisionRequest(image: cgImage, orientation: cgOrientation)
   }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    super.prepare(for: segue, sender: self)
+    
+    if let destVC = segue.destination as? IDTextsTableViewController, let vm = viewModel {
+      destVC.viewModel = IDTextsTableViewModel(texts: vm.capturedTexts)
+    }
+  }
+  
 
   func show(_ image: UIImage) {
 
@@ -252,6 +265,12 @@ class ScannedImageViewController: UIViewController {
     let context = CIContext()
     let cgImage = context.createCGImage(ciImage, from: ciImage.extent)
     let output = UIImage(cgImage: cgImage!)
+    
+    //remove overlay if perspective correction is successful
+    if pathLayer != nil {
+      self.pathLayer?.sublayers?.removeAll()
+    }
+    
     return output
   }
   

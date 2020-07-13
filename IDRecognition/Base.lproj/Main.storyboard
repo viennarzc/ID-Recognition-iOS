@@ -500,10 +500,10 @@
             </objects>
             <point key="canvasLocation" x="3019" y="-279"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Texts Table View Controller-->
         <scene sceneID="iAd-FZ-kUJ">
             <objects>
-                <tableViewController id="9MA-vl-s4m" sceneMemberID="viewController">
+                <tableViewController id="9MA-vl-s4m" customClass="IDTextsTableViewController" customModule="IDRecognition" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="HyO-QR-qYV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -548,7 +548,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="IPV-PM-MVH"/>
+        <segue reference="U9N-Oo-Wa8"/>
         <segue reference="bhQ-02-zPA"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -42,24 +42,31 @@ final class TextProcessor {
     case .driversLicense:
       self.processedTexts = texts.removeUnnecessaryWords(for: .driversLicense)
       models = createModel(fromKyc: types)
+      .findProvince(from: texts)
+      .findCity(from: texts)
 
       return modifyScanItemForDriverLicense(models)
 
     case .tin:
       self.processedTexts = texts.removeUnnecessaryWords(for: .tin)
       models = createModel(fromKyc: types)
+      .findProvince(from: texts)
+      .findCity(from: texts)
 
       return modifyScanItemForTIN(models)
 
     case .umid:
       self.processedTexts = texts.removeUnnecessaryWords(for: .umid)
       models = createModel(fromKyc: types)
-
-      return modifyScanItemForUMID(models)
+      .findProvince(from: texts)
+      .findCity(from: texts)
 
     case .passport:
       self.processedTexts = texts.removeUnnecessaryWords(for: .passport)
       models = createModel(fromKyc: types)
+        .findProvince(from: texts)
+        .findCity(from: texts)
+
 
       return modifyScanItemForPassport(models)
 
@@ -191,5 +198,46 @@ final class TextProcessor {
     //formats for birthdate format to be submission ready for backend server
     let dd = formatter.date(from: string)
     return string
+  }
+  
+  func setPresentCountry() {
+    ///TODO: Use Locale
+//     let local = Locale.current
+//       print(local.currencyCode)
+//       print(local.currencySymbol)
+//       print(local.description)
+//       print(local.languageCode)
+//       print(local.regionCode)
+  }
+}
+
+extension Array where Element == ScanItem {
+  func findProvince(from texts: [String]) -> [ScanItem] {
+     var newModel = self
+     
+     let joined = texts.joined(separator: " ").lowercased()
+     PHDivisionsModel.shared.findProvince(from: joined) { (c) in
+       if let city = c, let row = self.firstIndex(where: { $0.name.contains("present_province") }) {
+         newModel[row].data = city.name
+         return
+       }
+     }
+     
+     return newModel
+   }
+  
+  
+  func findCity(from texts: [String]) -> [ScanItem] {
+    var newModel = self
+    
+    let joined = texts.joined(separator: " ").lowercased()
+    PHDivisionsModel.shared.findCity(from: joined) { (c) in
+      if let city = c, let row = self.firstIndex(where: { $0.name.contains("present_city") }) {
+        newModel[row].data = city.name
+        return
+      }
+    }
+    
+    return newModel
   }
 }
