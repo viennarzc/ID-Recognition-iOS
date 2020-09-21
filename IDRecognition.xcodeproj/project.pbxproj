@@ -23,6 +23,7 @@
 		86720E4A24B598950094592C /* KYCType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86720E4924B598950094592C /* KYCType.swift */; };
 		86720E4D24B5991B0094592C /* DateFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86720E4C24B5991B0094592C /* DateFormats.swift */; };
 		868DA95424B2D2B500A05022 /* VisionKitDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868DA95324B2D2B500A05022 /* VisionKitDocumentViewController.swift */; };
+		86930A5124BD62DB0000DEAF /* NaturalLanguageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86930A5024BD62DB0000DEAF /* NaturalLanguageHelper.swift */; };
 		869A7B9A24A628C100C14FE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7B9924A628C100C14FE2 /* AppDelegate.swift */; };
 		869A7B9C24A628C100C14FE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7B9B24A628C100C14FE2 /* SceneDelegate.swift */; };
 		869A7B9E24A628C100C14FE2 /* LiveCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869A7B9D24A628C100C14FE2 /* LiveCaptureViewController.swift */; };
@@ -77,6 +78,7 @@
 		86720E4924B598950094592C /* KYCType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KYCType.swift; sourceTree = "<group>"; };
 		86720E4C24B5991B0094592C /* DateFormats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormats.swift; sourceTree = "<group>"; };
 		868DA95324B2D2B500A05022 /* VisionKitDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionKitDocumentViewController.swift; sourceTree = "<group>"; };
+		86930A5024BD62DB0000DEAF /* NaturalLanguageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalLanguageHelper.swift; sourceTree = "<group>"; };
 		869A7B9624A628C100C14FE2 /* IDRecognition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IDRecognition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		869A7B9924A628C100C14FE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		869A7B9B24A628C100C14FE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				860B53F124B5A822004280F2 /* TextProcessor+UMID.swift */,
 				860B53F524B5D811004280F2 /* TextProcessor+TIN.swift */,
 				860B53F724B5D90B004280F2 /* TextProcessor+DL.swift */,
+				86930A5024BD62DB0000DEAF /* NaturalLanguageHelper.swift */,
 			);
 			path = TextProcess;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				86720E4A24B598950094592C /* KYCType.swift in Sources */,
 				869A7BCE24A629FE00C14FE2 /* CGImagePropertyOrientationExtensions.swift in Sources */,
 				869A7BCA24A6294700C14FE2 /* CoreGraphicsExtension.swift in Sources */,
+				86930A5124BD62DB0000DEAF /* NaturalLanguageHelper.swift in Sources */,
 				860B53F824B5D90B004280F2 /* TextProcessor+DL.swift in Sources */,
 				86720E4D24B5991B0094592C /* DateFormats.swift in Sources */,
 				86720E4324B593A80094592C /* TextProcessor.swift in Sources */,
